@@ -42,7 +42,7 @@
                     android:id="@+id/et_nickName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="昵称" />
+                    android:hint="昵称" />
 
                 <EditText
                     android:id="@+id/et_gender"
@@ -50,13 +50,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:text="性别" />
+                    android:hint="性别" />
 
                 <EditText
                     android:id="@+id/et_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="年龄" />
+                    android:hint="年龄" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -78,7 +78,7 @@
                 android:id="@+id/et_account_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:hint="请输入账号"
                 android:textSize="20dp"
                 android:gravity="center_horizontal"/>
         </LinearLayout>
@@ -100,7 +100,7 @@
                 android:id="@+id/et_birth_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:hint="请输入生日"
                 android:textSize="20dp"
                 android:gravity="center_horizontal"/>
         </LinearLayout>
@@ -122,7 +122,7 @@
                 android:id="@+id/et_city_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:hint="请输入所在城市"
                 android:textSize="20dp"
                 android:gravity="center_horizontal"/>
         </LinearLayout>
@@ -145,7 +145,7 @@
                 android:id="@+id/et_university_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:hint="请输入所在学校"
                 android:textSize="20sp"
                 android:gravity="center_horizontal"/>
         </LinearLayout>
@@ -160,6 +160,7 @@
             android:id="@+id/et_signature_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="留下一点话吧！"
             android:textSize="20dp"
             />
 
@@ -169,6 +170,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="编辑完成"/>
-
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/btn_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="取消编辑"/>
     </LinearLayout>
 </ScrollView>

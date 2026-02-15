@@ -1,11 +1,9 @@
-package com.example.weatherforecast;
+package com.example.weatherforecast.main;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -14,9 +12,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.weatherforecast.R;
+import com.example.weatherforecast.adapter.ViewPager2Adapter;
+import com.example.weatherforecast.profile.EditActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private void initEvent() {
         List<Fragment> list=new ArrayList<>();
         list.add(new HomeFragment());
-        list.add(new MineFragment());
+        list.add(new EditActivity.MineFragment());
         ViewPager2Adapter viewPager2Adapter=new ViewPager2Adapter(MainActivity.this,list);
         viewPager2.setAdapter(viewPager2Adapter);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {

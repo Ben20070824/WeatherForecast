@@ -1,4 +1,4 @@
-package com.example.weatherforecast;
+package com.example.weatherforecast.login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.weatherforecast.R;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText etAccount, etPassword, etPasswordEnsure;

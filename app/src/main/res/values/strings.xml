@@ -31,5 +31,7 @@
     <string name="tem_low">低温</string>
     <string name="win">风向</string>
     <string name="win_speed">风级</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

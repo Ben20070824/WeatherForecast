@@ -1,4 +1,4 @@
-package com.example.weatherforecast;
+package com.example.weatherforecast.tool;
 
 import java.util.List;
 
@@ -30,10 +30,10 @@ public class SevenDayWeatherInfo {
     public static class WeatherData {
         private String date;
         private String wea;
-        private String temDay;        // 修正：变量名改为驼峰式
-        private String temNight;      // 修正：变量名改为驼峰式
+        private String temDay;
+        private String temNight;
         private String win;
-        private String winSpeed;      // 修正：变量名改为驼峰式
+        private String winSpeed;
 
         public WeatherData(String date, String wea, String temDay, String temNight, String win, String winSpeed) {
             this.date = date;

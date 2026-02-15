@@ -1,4 +1,4 @@
-package com.example.weatherforecast;
+package com.example.weatherforecast.login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,10 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;import com.example.weatherforecast.profile.EditActivity;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.example.weatherforecast.main.MainActivity;
+import com.example.weatherforecast.R;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText etAccount, etPassword;
@@ -50,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         tvNoAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RegisterActivity.startRegisterActivity(EditActivity.LoginActivity.this);
+                RegisterActivity.startRegisterActivity(LoginActivity.this);
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -63,16 +66,16 @@ public class LoginActivity extends AppCompatActivity {
                     if (etAccount.getText().toString().equals(account)) {
                         if (etPassword.getText().toString().equals(password)) {
                             saveLoginState();
-                            MainActivity.startMainActivity(EditActivity.LoginActivity.this);
+                            MainActivity.startMainActivity(LoginActivity.this);
                         } else {
-                            Toast.makeText(EditActivity.LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(EditActivity.LoginActivity.this, "账号不存在", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "账号不存在", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {
-                    Toast.makeText(EditActivity.LoginActivity.this,"请先注册账号",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,"请先注册账号",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -81,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         updateLoginStateFromSP();
     }
     public static void startLoginActivity(Context context){
-        Intent intent=new Intent(context,EditActivity.LoginActivity.class);
+        Intent intent=new Intent(context,LoginActivity.class);
         context.startActivity(intent);
     }
     private void saveLoginState(){
@@ -103,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         if(cbAutomaticLogin.isChecked()){
-            Toast.makeText(EditActivity.LoginActivity.this,"自动登录中",Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this,"自动登录中",Toast.LENGTH_SHORT).show();
             btnLogin.callOnClick();
         }
     }

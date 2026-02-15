@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_city"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_city"
+        app:layout_constraintStart_toEndOf="@id/tv_city"/>
+
+    <TextView
+        android:id="@+id/tv_wea"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#333333"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_city"/>
+
+    <TextView
+        android:id="@+id/tv_tem_high"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#555555"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_wea"
+        app:layout_constraintStart_toEndOf="@id/tv_wea"/>
+
+    <TextView
+        android:id="@+id/tv_tem_low"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#555555"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_tem_high"
+        app:layout_constraintStart_toEndOf="@id/tv_tem_high"/>
+
+    <TextView
+        android:id="@+id/tv_win"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_wea"/>
+
+    <!-- 7. 风速 -->
+    <TextView
+        android:id="@+id/tv_win_speed"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_win"
+        app:layout_constraintStart_toEndOf="@id/tv_win"/>
+
+    <!-- 8. 风力 -->
+    <TextView
+        android:id="@+id/tv_win_meter"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_win_speed"
+        app:layout_constraintStart_toEndOf="@id/tv_win_speed"/>
+
+    <!-- 9. 空气质量 -->
+    <TextView
+        android:id="@+id/tv_air"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_win"/>
+
+    <!-- 10. 气压 -->
+    <TextView
+        android:id="@+id/tv_pressure"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_air"
+        app:layout_constraintStart_toEndOf="@id/tv_air"/>
+
+    <!-- 11. 湿度 -->
+    <TextView
+        android:id="@+id/tv_humidity"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_pressure"
+        app:layout_constraintStart_toEndOf="@id/tv_pressure"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

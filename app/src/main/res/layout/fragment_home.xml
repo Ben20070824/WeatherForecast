@@ -1,134 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeFragment">
+    tools:context=".main.HomeFragment">
 
 
+    <LinearLayout
+        android:id="@+id/ll_content1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/search_shape"
+        android:orientation="horizontal"
+        android:weightSum="7"
+        app:layout_constraintTop_toTopOf="parent">
 
-<LinearLayout
-    android:id="@+id/ll_content1"
-    android:layout_width="match_parent"
-    android:layout_height="70dp"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_marginTop="10dp"
-    android:orientation="horizontal"
-    android:background="@drawable/search_shape"
-    android:weightSum="7">
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/search" />
 
-    <ImageView
-        android:layout_marginStart="10dp"
-        android:layout_width="0dp"
-        android:id="@+id/iv_search"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/search" />
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_weight="4"
+            android:hint="@string/search_hint" />
 
-    <EditText
-        android:layout_width="0dp"
-        android:layout_weight="4"
-        android:id="@+id/et_search"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:hint="@string/search_hint" />
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_weight="2"
+            android:backgroundTint="@color/purple"
+            android:text="查询" />
+    </LinearLayout>
 
-    <Button
-        android:layout_weight="2"
-        android:id="@+id/btn_search"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/purple"
-        android:text="查询"
-        android:layout_marginRight="10dp"/>
-</LinearLayout>
     <com.google.android.material.tabs.TabLayout
-        app:layout_constraintTop_toBottomOf="@id/ll_content1"
         android:id="@+id/tl_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="fixed"
+        app:layout_constraintTop_toBottomOf="@id/ll_content1"
         app:tabGravity="fill"
-        app:tabTextColor="@color/black"
-        app:tabSelectedTextColor="@color/purple"
         app:tabIndicatorColor="@color/purple"
-        app:tabIndicatorHeight="3dp">
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/purple"
+        app:tabTextColor="@color/black">
 
     </com.google.android.material.tabs.TabLayout>
 
-    <TextView
-        app:layout_constraintTop_toBottomOf="@id/tl_content"
-        android:id="@+id/tv_city"
-        android:text="@string/city"
-        android:textSize="30sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        />
-    <LinearLayout
-        app:layout_constraintTop_toBottomOf="@id/tv_city"
-        android:id="@+id/ll_content2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:text="@string/date"
-            android:id="@+id/tv_date"
-            android:layout_width="86dp"
-            android:layout_height="40dp"
-            android:gravity="center" />
-
-        <TextView
-            android:text="@string/weather"
-            android:id="@+id/wea"
-            android:layout_width="57dp"
-            android:layout_height="40dp"
-            android:gravity="center" />
-
-        <TextView
-            android:text="@string/tem_high"
-            android:id="@+id/tem_day"
-            android:layout_width="35dp"
-            android:layout_height="40dp"
-            android:gravity="center" />
-
-        <TextView
-            android:text="@string/tem_low"
-            android:id="@+id/tem_night"
-            android:layout_width="35dp"
-            android:layout_height="40dp"
-            android:gravity="center" />
-
-        <TextView
-            android:text="@string/win"
-            android:id="@+id/win"
-            android:layout_width="83dp"
-            android:layout_height="40dp"
-            android:gravity="center" />
-
-        <TextView
-            android:id="@+id/win_speed"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="@string/win_speed" />
-
-
-    </LinearLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_weather"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_content2" />
+<androidx.fragment.app.FragmentContainerView
+    android:id="@+id/fcv"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintTop_toBottomOf="@id/tl_content"
+    app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
