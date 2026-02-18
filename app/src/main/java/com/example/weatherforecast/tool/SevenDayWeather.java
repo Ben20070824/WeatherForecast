@@ -2,11 +2,11 @@ package com.example.weatherforecast.tool;
 
 import java.util.List;
 
-public class SevenDayWeatherInfo {
+public class SevenDayWeather {
     private String city;
     private List<WeatherData> data;
 
-    public SevenDayWeatherInfo(String city, List<WeatherData> data) {
+    public SevenDayWeather(String city, List<WeatherData> data) {
         this.city = city;
         this.data = data;
     }

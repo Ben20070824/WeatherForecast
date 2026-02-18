@@ -15,7 +15,6 @@ import java.util.List;
 
 public class ManyDayWeatherAdapter extends RecyclerView.Adapter<ManyDayWeatherAdapter.MyHolder> {
     private List<ManyDayWeather.WeatherInfo> list;
-
     public ManyDayWeatherAdapter(List<ManyDayWeather.WeatherInfo> list) {
         this.list = list;
     }
@@ -30,12 +29,11 @@ public class ManyDayWeatherAdapter extends RecyclerView.Adapter<ManyDayWeatherAd
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         ManyDayWeather.WeatherInfo weatherInfo = list.get(position);
-
         holder.tvDate.setText(weatherInfo.getDate());
         holder.tvWeaDay.setText(weatherInfo.getWeaDay());
         holder.tvWeaNight.setText(weatherInfo.getWeaNight());
-        holder.tvTemDay.setText(weatherInfo.getTem_high());
-        holder.tvTemNight.setText(weatherInfo.getTem_low());
+        holder.tvTemDay.setText(weatherInfo.getTem_high()+"℃");
+        holder.tvTemNight.setText(weatherInfo.getTem_low()+"℃");
         holder.tvWin.setText(weatherInfo.getWin());
     }
 
@@ -43,10 +41,8 @@ public class ManyDayWeatherAdapter extends RecyclerView.Adapter<ManyDayWeatherAd
     public int getItemCount() {
         return list.size();
     }
-
     class MyHolder extends RecyclerView.ViewHolder {
         TextView tvDate, tvWeaDay, tvWeaNight, tvTemDay, tvTemNight, tvWin;
-
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             tvDate = itemView.findViewById(R.id.tv_date);

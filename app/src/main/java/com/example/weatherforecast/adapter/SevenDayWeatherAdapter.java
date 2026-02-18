@@ -9,12 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weatherforecast.R;
-import com.example.weatherforecast.tool.SevenDayWeatherInfo;
+import com.example.weatherforecast.tool.SevenDayWeather;
 
 import java.util.List;
 
 public class SevenDayWeatherAdapter extends RecyclerView.Adapter<SevenDayWeatherAdapter.Holder> {
-    List<SevenDayWeatherInfo.WeatherData> list;
+    List<SevenDayWeather.WeatherData> list;
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,7 +37,7 @@ public class SevenDayWeatherAdapter extends RecyclerView.Adapter<SevenDayWeather
         return list.size();
     }
 
-    public SevenDayWeatherAdapter(List<SevenDayWeatherInfo.WeatherData> list) {
+    public SevenDayWeatherAdapter(List<SevenDayWeather.WeatherData> list) {
         this.list = list;
     }
 

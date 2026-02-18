@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SevenDayFragment">
+    tools:context=".main.childfragment.SevenDayFragment">
 
     <TextView
         android:id="@+id/tv_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/city"
         android:textSize="30sp"
         app:layout_constraintTop_toTopOf="parent" />
 

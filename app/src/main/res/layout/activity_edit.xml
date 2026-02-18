@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/main"
@@ -9,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="20dp"
-        tools:context=".later.EditActivity">
+        tools:context=".profile.MineFragment">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -156,13 +157,13 @@
             android:text="个性签名"
             android:textSize="20dp"
             android:gravity="center"/>
+
         <EditText
             android:id="@+id/et_signature_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="留下一点话吧！"
-            android:textSize="20dp"
-            />
+            android:textSize="20dp" />
 
         <Button
             android:layout_marginTop="20dp"

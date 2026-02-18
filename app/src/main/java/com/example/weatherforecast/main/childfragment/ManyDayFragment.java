@@ -1,4 +1,4 @@
-package com.example.weatherforecast;
+package com.example.weatherforecast.main.childfragment;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,15 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.weatherforecast.adapter.SevenDayWeatherAdapter;
+import com.example.weatherforecast.R;
+import com.example.weatherforecast.adapter.ManyDayWeatherAdapter;
 import com.example.weatherforecast.main.HomeFragment;
-import com.example.weatherforecast.tool.SevenDayWeatherInfo;
+import com.example.weatherforecast.tool.ManyDayWeather;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,21 +29,20 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SevenDayFragment extends Fragment {
+public class ManyDayFragment extends Fragment {
 
-    private TextView tvCity, tvDate, tvWea, tvTemDay, tvTemNight, tvWin, tvWinSpeed;
-    private RecyclerView rvWeather;
-    private String mParam1;
-    private String mParam2;
-    private MyHandler mHandler=new MyHandler();
-    private SevenDayWeatherAdapter mAdapter;
+    private TextView tvCity;
+    private RecyclerView recyclerView;
+    private MyHandler mHandler=new MyHandler(Looper.getMainLooper(),this);
+    private ManyDayWeatherAdapter mAdapter;
+    public ManyDayFragment() {
 
-    public SevenDayFragment() {
     }
 
     @Override
@@ -52,8 +53,8 @@ public class SevenDayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_many_day, container, false);
 
-        return inflater.inflate(R.layout.fragment_seven_day, container, false);
     }
 
     @Override
@@ -63,24 +64,13 @@ public class SevenDayFragment extends Fragment {
         tvCity.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),"FZSTK.TTF"));
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeFragment)getParentFragment()).setOnSearchListener(new HomeFragment.OnSearchListener() {
-            @Override
-            public void transmitData(String city) {
-                requestWeather(city);
-            }
-        });
-    }
-
-    private void requestWeather(String city) {
+    public void requestWeather(String city) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 HttpURLConnection connection = null;
                 try {
-                    URL url = new URL("http://v1.yiketianqi.com/free/week?appid=47517298&appsecret=Ap7TYeAW&unescape=1&city=" + city);
+                    URL url = new URL("http://v1.yiketianqi.com/free/month?appid=47517298&appsecret=Ap7TYeAW&unescape=1&city=" + city);
                     connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     connection.setConnectTimeout(8000);
@@ -102,17 +92,10 @@ public class SevenDayFragment extends Fragment {
         }).start();
     }
 
-    private void initView(View view) {
-        tvCity = view.findViewById(R.id.tv_city);
-        tvDate = view.findViewById(R.id.tv_date);
-        tvWea = view.findViewById(R.id.wea);
-        tvTemDay = view.findViewById(R.id.tem_day);
-        tvTemNight = view.findViewById(R.id.tem_night);
-        tvWin = view.findViewById(R.id.win);
-        tvWinSpeed = view.findViewById(R.id.win_speed);
-        rvWeather = view.findViewById(R.id.rv_weather);
+    private void initView(View view){
+        tvCity=view.findViewById(R.id.tv_city);
+        recyclerView=view.findViewById(R.id.rv_weather);
     }
-
     private String streamToString(InputStream inputStream) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -124,9 +107,9 @@ public class SevenDayFragment extends Fragment {
         return stringBuilder.toString();
     }
 
-    private SevenDayWeatherInfo decodeJson(String json) {
+    private static ManyDayWeather decodeJson(String json) {
         String city = "";
-        List<SevenDayWeatherInfo.WeatherData> WeatherDataList = new ArrayList<>();
+        List<ManyDayWeather.WeatherInfo> WeatherDataList = new ArrayList<>();
         try {
             JSONObject root = new JSONObject(json);
 
@@ -137,31 +120,44 @@ public class SevenDayFragment extends Fragment {
                 JSONObject dayData = dataArray.getJSONObject(i);
                 String date = dayData.getString("date");
                 String wea = dayData.getString("wea");
-                String tem_day = dayData.getString("tem_day");
-                String tem_night = dayData.getString("tem_night");
-                String win = dayData.getString("win");
-                String win_speed = dayData.getString("win_speed");
-                WeatherDataList.add(new SevenDayWeatherInfo.WeatherData(date, wea, tem_day, tem_night, win, win_speed));
+                String tem_high = dayData.getString("tem_day");
+                String tem_low = dayData.getString("tem_night");
+                String win = dayData.optString("win","");
+                if(win.isBlank()){
+                    win ="暂无数据";
+                }
+
+                String weaDay = dayData.getString("wea_day");
+                String weaNight = dayData.getString("wea_night");
+                WeatherDataList.add(new ManyDayWeather.WeatherInfo(date,wea,tem_high,tem_low,win,weaDay,weaNight));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new SevenDayWeatherInfo(city, WeatherDataList);
+        return new ManyDayWeather(city,WeatherDataList);
     }
 
-    private void setText(SevenDayWeatherInfo sevenDayWeatherInfo) {
-        tvCity.setText(sevenDayWeatherInfo.getCity());
-        mAdapter=new SevenDayWeatherAdapter(sevenDayWeatherInfo.getData());
-        rvWeather.setLayoutManager(new LinearLayoutManager(requireContext()));
-        rvWeather.setAdapter(mAdapter);
+    private void setText(ManyDayWeather manyDayWeather) {
+        tvCity.setText(manyDayWeather.getCity());
+        mAdapter=new ManyDayWeatherAdapter(manyDayWeather.getList());
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
-    private class MyHandler extends Handler {
+
+    private static class MyHandler extends Handler {
+        WeakReference<ManyDayFragment> manyDayFragmentRef;
+
+        public MyHandler(@NonNull Looper looper,ManyDayFragment manyDayFragment) {
+            super(looper);
+            this.manyDayFragmentRef = new WeakReference<>(manyDayFragment);
+        }
+
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             String responseData = msg.obj.toString();
-            setText(decodeJson(responseData));
+            manyDayFragmentRef.get().setText(decodeJson(responseData));
         }
     }
 }

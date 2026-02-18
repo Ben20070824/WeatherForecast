@@ -7,9 +7,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.List;
 
-public class ViewPager2Adapter extends FragmentStateAdapter {
+public class ViewPager2FragmentAdapter extends FragmentStateAdapter {
     private List<Fragment> list;
-    public ViewPager2Adapter(@NonNull FragmentActivity fragmentActivity,List<Fragment> list) {
+    public ViewPager2FragmentAdapter(@NonNull FragmentActivity fragmentActivity, List<Fragment> list) {
         super(fragmentActivity);
         this.list=list;
     }

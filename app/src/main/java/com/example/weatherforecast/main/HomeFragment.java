@@ -5,42 +5,28 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
-import android.os.Message;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.weatherforecast.DayFragment;
-import com.example.weatherforecast.ManyDayFragment;
 import com.example.weatherforecast.R;
-import com.example.weatherforecast.SevenDayFragment;
-import com.example.weatherforecast.adapter.SevenDayWeatherAdapter;
-import com.example.weatherforecast.adapter.ViewPager2Adapter;
-import com.example.weatherforecast.tool.ManyDayWeather;
-import com.example.weatherforecast.tool.SevenDayWeatherInfo;
+import com.example.weatherforecast.adapter.ViewPager2FragmentAdapter;
+import com.example.weatherforecast.main.childfragment.DayFragment;
+import com.example.weatherforecast.main.childfragment.ManyDayFragment;
+import com.example.weatherforecast.main.childfragment.SevenDayFragment;
+import com.example.weatherforecast.tool.DayWeather;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +36,9 @@ public class HomeFragment extends Fragment {
     private Button btnSearch;
     private TabLayout tabLayout;
     private OnSearchListener onSearchListener;
-    private FragmentContainerView fragmentContainerView;
+    private OnSearchListener currentSearchListener;
+    private ViewPager2 viewPager2;
+    private final String[] tabTitles = {"当天天气", "七天天气", "31天天气"};
 
     public HomeFragment() {
     }
@@ -78,46 +66,50 @@ public class HomeFragment extends Fragment {
         etSearch = view.findViewById(R.id.et_search);
         btnSearch = view.findViewById(R.id.btn_search);
         tabLayout = view.findViewById(R.id.tl_content);
-        fragmentContainerView=view.findViewById(R.id.fcv);
+        viewPager2=view.findViewById(R.id.viewpager2);
     }
 
     private void initEvent() {
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fcv,new DayFragment()).commit();
-        tabLayout.addTab(tabLayout.newTab().setText("当日天气"));
-        tabLayout.addTab(tabLayout.newTab().setText("七天天气"));
-        tabLayout.addTab(tabLayout.newTab().setText("还不够？"));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        viewPager2.setAdapter(new FragmentStateAdapter(this) {
+            @NonNull
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-                if(position==0){
-                    fragmentTransaction.replace(R.id.fcv,new DayFragment()).commit();
-                } else if (position==1) {
-                    fragmentTransaction.replace(R.id.fcv,new SevenDayFragment()).commit();
-                }
-                else if(position==2){
-                    fragmentTransaction.replace(R.id.fcv,new ManyDayFragment()).commit();
+            public Fragment createFragment(int position) {
+                switch (position){
+                    case 0:return new DayFragment();
+                    case 1:return new SevenDayFragment();
+                    case 2:return new ManyDayFragment();
+                    default:return new DayFragment();
                 }
             }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
+            public int getItemCount() {
+                return tabTitles.length;
             }
         });
+        new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int i) {
+                tab.setText(tabTitles[i]);
+            }
+        }).attach();
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "获取天气中", Toast.LENGTH_SHORT).show();
-                onSearchListener.transmitData(etSearch.getText().toString());
+                currentSearchListener.transmitData(etSearch.getText().toString());
             }
         });
+        // 监听页面切换
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                updateSearchListener(position);
+            }
+        });
+        updateSearchListener(0);
+        autoRequestWeather();
     }
 
     public interface OnSearchListener {
@@ -126,5 +118,60 @@ public class HomeFragment extends Fragment {
 
     public  void setOnSearchListener(OnSearchListener onSearchListener) {
         this.onSearchListener = onSearchListener;
+    }
+    // 根据当前位置更新监听器
+    private void updateSearchListener(int position) {
+        // 获取当前Fragment
+        Fragment currentFragment = getChildFragmentManager()
+                .findFragmentByTag("f" + position);
+
+        if (currentFragment == null) {
+            return;
+        }
+
+        if (currentFragment instanceof DayFragment) {
+            currentSearchListener = new OnSearchListener() {
+                @Override
+                public void transmitData(String city) {
+                    ((DayFragment) currentFragment).requestWeather(city);
+                }
+            };
+        } else if (currentFragment instanceof SevenDayFragment) {
+            currentSearchListener = new OnSearchListener() {
+                @Override
+                public void transmitData(String city) {
+                    ((SevenDayFragment) currentFragment).requestWeather(city);
+                }
+            };
+        } else if (currentFragment instanceof ManyDayFragment) {
+            currentSearchListener = new OnSearchListener() {
+                @Override
+                public void transmitData(String city) {
+                    ((ManyDayFragment) currentFragment).requestWeather(city);
+                }
+            };
+        }
+    }
+    private void autoRequestWeather() {
+        // 延迟一点时间执行，确保ViewPager2和Fragment完全初始化
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isAdded() && getContext() != null) {
+                    etSearch.setText("长沙");
+
+                    if (currentSearchListener != null) {
+                        Toast.makeText(getContext(), "正在获取长沙天气...", Toast.LENGTH_SHORT).show();
+                        currentSearchListener.transmitData("长沙");
+                    } else {
+                        updateSearchListener(0);
+                        if (currentSearchListener != null) {
+                            Toast.makeText(getContext(), "正在获取长沙天气...", Toast.LENGTH_SHORT).show();
+                            currentSearchListener.transmitData("长沙");
+                        }
+                    }
+                }
+            }
+        }, 500); // 延迟500ms，确保UI完全初始化
     }
 }

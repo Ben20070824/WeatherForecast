@@ -21,6 +21,7 @@ import com.example.weatherforecast.main.MainActivity;
 import com.example.weatherforecast.R;
 
 public class LoginActivity extends AppCompatActivity {
+    //声明控件
     private EditText etAccount, etPassword;
     private CheckBox cbRememberPassword, cbAutomaticLogin;
     private TextView tvNoAccount;
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
     }
-
+    //初始化控件
     private void initView() {
         etAccount = findViewById(R.id.et_account);
         etPassword = findViewById(R.id.et_password);
@@ -48,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         tvNoAccount = findViewById(R.id.tv_no_account);
         btnLogin = findViewById(R.id.btn_login);
     }
-
+    //初始化点击事件
     private void initClick() {
         tvNoAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,19 +81,18 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    //初始化事件
     private void initEvent() {
         updateLoginStateFromSP();
     }
-    public static void startLoginActivity(Context context){
-        Intent intent=new Intent(context,LoginActivity.class);
-        context.startActivity(intent);
-    }
+    //保存登录状态选项
     private void saveLoginState(){
         SharedPreferences loginState = getSharedPreferences("login_state", MODE_PRIVATE);
         loginState.edit().putBoolean("remember_password",cbRememberPassword.isChecked())
                 .putBoolean("automatic_login",cbAutomaticLogin.isChecked())
                 .apply();
     }
+    //根据登录状态选项登录
     private void updateLoginStateFromSP(){
         SharedPreferences loginState = getSharedPreferences("login_state", MODE_PRIVATE);
         cbRememberPassword.setChecked(loginState.getBoolean("remember_password",false));
@@ -109,5 +109,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this,"自动登录中",Toast.LENGTH_SHORT).show();
             btnLogin.callOnClick();
         }
+    }
+    //跳转到该界面
+    public static void startLoginActivity(Context context){
+        Intent intent=new Intent(context,LoginActivity.class);
+        context.startActivity(intent);
     }
 }

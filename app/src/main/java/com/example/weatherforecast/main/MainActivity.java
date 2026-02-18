@@ -15,8 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.weatherforecast.R;
-import com.example.weatherforecast.adapter.ViewPager2Adapter;
-import com.example.weatherforecast.profile.EditActivity;
+import com.example.weatherforecast.adapter.ViewPager2FragmentAdapter;
+import com.example.weatherforecast.profile.MineFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private void initEvent() {
         List<Fragment> list=new ArrayList<>();
         list.add(new HomeFragment());
-        list.add(new EditActivity.MineFragment());
-        ViewPager2Adapter viewPager2Adapter=new ViewPager2Adapter(MainActivity.this,list);
+        list.add(new MineFragment());
+        ViewPager2FragmentAdapter viewPager2Adapter=new ViewPager2FragmentAdapter(MainActivity.this,list);
         viewPager2.setAdapter(viewPager2Adapter);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override

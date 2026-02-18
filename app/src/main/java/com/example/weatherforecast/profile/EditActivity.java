@@ -13,15 +13,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -33,11 +30,10 @@ import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
 
-import com.example.weatherforecast.tool.ImageUtil;
-import com.example.weatherforecast.main.MainActivity;
 import com.example.weatherforecast.R;
+import com.example.weatherforecast.main.MainActivity;
+import com.example.weatherforecast.tool.ImageUtil;
 import com.example.weatherforecast.tool.UserInfo;
 
 import java.io.File;
@@ -45,17 +41,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 public class EditActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_CAMERA = 1;
     public static final int REQUEST_CODE_GALLERY = 2; // 添加相册请求代码
     public static final int REQUEST_CODE_STORAGE_PERMISSION = 3; // 存储权限请求代码
     private EditText etNickName, etGender, etAge, etAccount, etBirth, etCity, etUniversity, etSignature;
-    private Button btnEdit, btnChangeAvatar,btnBack;
+    private Button btnEdit, btnChangeAvatar, btnBack;
     private ImageView ivAvatar;
     private Uri imageUri;
     private String imageBase64;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,28 +68,28 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_CODE_CAMERA){
-            if(resultCode==RESULT_OK){
+        if (requestCode == REQUEST_CODE_CAMERA) {
+            if (resultCode == RESULT_OK) {
                 try {
-                    InputStream inputStream=getContentResolver().openInputStream(imageUri);
+                    InputStream inputStream = getContentResolver().openInputStream(imageUri);
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                     ivAvatar.setImageBitmap(bitmap);
-                    String imageToBase64= ImageUtil.imageToBase64(bitmap);
-                    imageBase64=imageToBase64;
+                    String imageToBase64 = ImageUtil.imageToBase64(bitmap);
+                    imageBase64 = imageToBase64;
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
-        } else if(requestCode==REQUEST_CODE_GALLERY){
-            if(resultCode==RESULT_OK){
-                if(data != null && data.getData() != null){
+        } else if (requestCode == REQUEST_CODE_GALLERY) {
+            if (resultCode == RESULT_OK) {
+                if (data != null && data.getData() != null) {
                     Uri selectedImageUri = data.getData();
                     try {
-                        InputStream inputStream=getContentResolver().openInputStream(selectedImageUri);
+                        InputStream inputStream = getContentResolver().openInputStream(selectedImageUri);
                         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                         ivAvatar.setImageBitmap(bitmap);
-                        String imageToBase64=ImageUtil.imageToBase64(bitmap);
-                        imageBase64=imageToBase64;
+                        String imageToBase64 = ImageUtil.imageToBase64(bitmap);
+                        imageBase64 = imageToBase64;
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                         Toast.makeText(this, "无法读取图片", Toast.LENGTH_SHORT).show();
@@ -116,8 +110,8 @@ public class EditActivity extends AppCompatActivity {
         etSignature = findViewById(R.id.et_signature_text);
         btnEdit = findViewById(R.id.btn_edit);
         btnChangeAvatar = findViewById(R.id.btn_change);
-        btnBack=findViewById(R.id.btn_back);
-        ivAvatar=findViewById(R.id.iv_avatar);
+        btnBack = findViewById(R.id.btn_back);
+        ivAvatar = findViewById(R.id.iv_avatar);
     }
 
     private void initEvent() {
@@ -130,7 +124,7 @@ public class EditActivity extends AppCompatActivity {
         String city = spRecord.getString("city", "");
         String university = spRecord.getString("university", "");
         String signature = spRecord.getString("signature", "");
-        String avatar=spRecord.getString("image_64","");
+        String avatar = spRecord.getString("image_64", "");
         etNickName.setText(nickName);
         etGender.setText(gender);
         etAge.setText(age);
@@ -139,7 +133,7 @@ public class EditActivity extends AppCompatActivity {
         etCity.setText(city);
         etUniversity.setText(university);
         etSignature.setText(signature);
-        Bitmap bitmap=ImageUtil.base64ToImage(avatar);
+        Bitmap bitmap = ImageUtil.base64ToImage(avatar);
         ivAvatar.setImageBitmap(bitmap);
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -188,7 +182,7 @@ public class EditActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder=new AlertDialog.Builder(EditActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this);
                 builder.setTitle("提示");
                 builder.setMessage("编辑内容还未保存，确定要返回吗");
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -244,8 +238,8 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void openCamera() {
-        File imageTemp=new File(getExternalCacheDir(),"imageOut.jpeg");
-        if(imageTemp.exists()) imageTemp.delete();
+        File imageTemp = new File(getExternalCacheDir(), "imageOut.jpeg");
+        if (imageTemp.exists()) imageTemp.delete();
         try {
             imageTemp.createNewFile();
         } catch (IOException e) {
@@ -308,6 +302,7 @@ public class EditActivity extends AppCompatActivity {
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "选择图片"), REQUEST_CODE_GALLERY);
     }
+
     private void showStorageRationaleDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("提示");
@@ -338,8 +333,8 @@ public class EditActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults, int deviceId) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults, deviceId);
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openCamera();
@@ -355,122 +350,9 @@ public class EditActivity extends AppCompatActivity {
             }
         }
     }
+
     public static void startEditActivity(Context context) {
         Intent intent = new Intent(context, EditActivity.class);
         context.startActivity(intent);
-    }
-
-    public static class MineFragment extends Fragment {
-        TextView tvNickName, tvGender, tvAge, tvAccount, tvBirth, tvCity, tvUniversity, tvSignature;
-        Button btnEdit, btnLogout;
-        ImageView ivAvatar;
-
-        public MineFragment() {
-        }
-
-
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            // Inflate the layout for this fragment
-            return inflater.inflate(R.layout.fragment_mine, container, false);
-        }
-
-        @Override
-        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-            super.onViewCreated(view, savedInstanceState);
-            initView(view);
-            initEvent();
-            initClick();
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            SharedPreferences spRecord = getActivity().getSharedPreferences("user_info", getContext().MODE_PRIVATE);
-            tvNickName.setText(spRecord.getString("nickName", ""));
-            tvGender.setText(spRecord.getString("gender", ""));
-            tvAge.setText(spRecord.getString("age", ""));
-            tvAccount.setText(spRecord.getString("account", ""));
-            tvBirth.setText(spRecord.getString("birth", ""));
-            tvCity.setText(spRecord.getString("city", ""));
-            tvUniversity.setText(spRecord.getString("university", ""));
-            tvSignature.setText(spRecord.getString("signature", ""));
-            String imageAvatar=spRecord.getString("image_64","");
-            if(!imageAvatar.isBlank()){
-                ivAvatar.setImageBitmap(ImageUtil.base64ToImage(imageAvatar));
-            }
-            Intent intent = getActivity().getIntent();
-            if (intent != null) {
-                UserInfo userInfo = (UserInfo)intent.getSerializableExtra("USER_INFO");
-                if (userInfo == null){
-                    Log.d("tag","从未编辑过");
-                }
-                else {
-                    tvNickName.setText(userInfo.getNickName());
-                    tvGender.setText(userInfo.getGender());
-                    tvAge.setText(userInfo.getAge());
-                    tvAccount.setText(userInfo.getAccount());
-                    tvBirth.setText(userInfo.getBirth());
-                    tvCity.setText(userInfo.getCity());
-                    tvUniversity.setText(userInfo.getUniversity());
-                    tvSignature.setText(userInfo.getSignature());
-                }
-            }
-        }
-
-        private void initView(View view) {
-            tvNickName = view.findViewById(R.id.tv_nickName);
-            tvGender = view.findViewById(R.id.tv_gender);
-            tvAge = view.findViewById(R.id.tv_age);
-            tvAccount = view.findViewById(R.id.tv_account_text);
-            tvBirth = view.findViewById(R.id.tv_birth_text);
-            tvCity = view.findViewById(R.id.tv_city_text);
-            tvUniversity = view.findViewById(R.id.tv_university_text);
-            tvSignature = view.findViewById(R.id.tv_signature_text);
-            btnEdit = view.findViewById(R.id.btn_edit);
-            btnLogout = view.findViewById(R.id.btn_logout);
-            ivAvatar=view.findViewById(R.id.iv_avatar);
-        }
-
-        private void initEvent() {
-            try{
-                SharedPreferences userInfo = getActivity().getSharedPreferences("user_info", getContext().MODE_PRIVATE);
-                String nickName = userInfo.getString("nickName", "昵称");
-                String gender = userInfo.getString("gender", "性别");
-                String age = userInfo.getString("age", "年龄");
-                String account = userInfo.getString("account", "");
-                String birth = userInfo.getString("birth", "");
-                String city = userInfo.getString("city", "");
-                String university = userInfo.getString("university", "");
-                String signature = userInfo.getString("signature", "");
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-
-        private void initClick() {
-            btnEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getActivity(),"跳转编辑页面中",Toast.LENGTH_SHORT).show();
-                    getActivity().finish();
-                    startEditActivity(getActivity());
-                }
-            });
-            btnLogout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity().finish();
-                }
-            });
-        }
     }
 }
