@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="center"
             android:textColor="@android:color/black"
@@ -27,7 +27,7 @@
         <TextView
             android:id="@+id/wea"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:gravity="center"
             android:textColor="@android:color/black"
@@ -36,7 +36,7 @@
         <TextView
             android:id="@+id/tem_day"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@android:color/holo_red_light"
@@ -45,7 +45,7 @@
         <TextView
             android:id="@+id/tem_night"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@android:color/holo_blue_light"
@@ -54,7 +54,7 @@
         <TextView
             android:id="@+id/win"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:gravity="center"
             android:textColor="@android:color/black"
@@ -63,7 +63,7 @@
         <TextView
             android:id="@+id/win_speed"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
             android:textColor="@android:color/black"

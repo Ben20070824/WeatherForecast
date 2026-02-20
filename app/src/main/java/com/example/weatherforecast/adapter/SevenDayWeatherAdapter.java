@@ -53,4 +53,9 @@ public class SevenDayWeatherAdapter extends RecyclerView.Adapter<SevenDayWeather
             tvWinSpeed = itemView.findViewById(R.id.win_speed);
         }
     }
+    // 添加这个方法
+    public void setData(List<SevenDayWeather.WeatherData> newData) {
+        this.list.clear();
+        this.list.addAll(newData);
+    }
 }

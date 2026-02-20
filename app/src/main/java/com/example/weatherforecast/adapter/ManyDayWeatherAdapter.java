@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weatherforecast.R;
 import com.example.weatherforecast.tool.ManyDayWeather;
+import com.example.weatherforecast.tool.SevenDayWeather;
 
 import java.util.List;
 
@@ -52,5 +53,9 @@ public class ManyDayWeatherAdapter extends RecyclerView.Adapter<ManyDayWeatherAd
             tvTemNight = itemView.findViewById(R.id.tv_tem_night);
             tvWin = itemView.findViewById(R.id.tv_win);
         }
+    }
+    public void setData(List<ManyDayWeather.WeatherInfo> newData) {
+        this.list.clear();
+        this.list.addAll(newData);
     }
 }
