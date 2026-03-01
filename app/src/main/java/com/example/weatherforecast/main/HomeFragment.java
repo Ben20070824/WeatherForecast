@@ -64,8 +64,6 @@ public class HomeFragment extends Fragment {
         btnSearch = view.findViewById(R.id.btn_search);
         tabLayout = view.findViewById(R.id.tl_content);
         viewPager2 = view.findViewById(R.id.viewpager2);
-
-
     }
 
     private void initEvent() {
@@ -116,7 +114,6 @@ public class HomeFragment extends Fragment {
             }
             Toast.makeText(getContext(), "获取天气中", Toast.LENGTH_SHORT).show();
 
-            // 关键3：统一请求+缓存数据+刷新所有Fragment
             requestAllWeather(city);
         });
 

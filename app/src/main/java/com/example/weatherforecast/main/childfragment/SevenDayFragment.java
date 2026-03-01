@@ -117,8 +117,11 @@ public class SevenDayFragment extends Fragment {
 
         // 额外：确保RecyclerView布局刷新
         if (rvWeather != null) {
-            rvWeather.post(() -> {
-                rvWeather.requestLayout(); // 重新计算布局
+            rvWeather.post(new Runnable() {
+                @Override
+                public void run() {
+                    rvWeather.requestLayout(); // 重新计算布局
+                }
             });
         }
     }
